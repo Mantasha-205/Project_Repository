@@ -1,16 +1,13 @@
 import streamlit as st
 import pickle 
 import string
-from nltk.corpus import stopwords
-import nltk
-from nltk.stem.porter import PorterStemmer
-
-ps= PorterStemmer()
-
 import nltk
 nltk.download('punkt')
 nltk.download('stopwords')    #For streamlit ;requirements.txt
+from nltk.corpus import stopwords
+from nltk.stem.porter import PorterStemmer
 
+ps= PorterStemmer()
 def transform_text(text):
     text = text.lower()
     text = nltk.word_tokenize(text)    #not the text is converted to list
@@ -37,14 +34,23 @@ st.title("Email Spam Classifier")
 input_email = st.text_area("Enter the message")
 
 if st.button('Predict'):
-    #1.Preprocess
-    transformed_email= transform_text(input_email)
-    #2.vectorize
-    vector_input = cv.transform([transformed_email])
-    #3.predict
-    result = model.predict(vector_input)[0]
-    #4.Display
-    if result == 1:
-        st.header("Spam")
+    
+    # Check for empty input
+    if input_email.strip() == "":
+        st.warning("Please enter a message!")
+    
     else:
-        st.header("ham")
+        # 1. Preprocess
+        transformed_email = transform_text(input_email)
+
+        # 2. Vectorize
+        vector_input = cv.transform([transformed_email])
+
+        # 3. Predict
+        result = model.predict(vector_input)[0]
+
+        # 4. Display
+        if result == 1:
+            st.header("Spam")
+        else:
+            st.header("Ham")
