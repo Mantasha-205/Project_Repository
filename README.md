@@ -1,4 +1,4 @@
-# Project_Repository
-I am uploading my projects here
+# Email Spam Classifier
+A ML model Project
 <br>
 Author -  Mantasha Jariwala
